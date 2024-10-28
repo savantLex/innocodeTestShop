@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {CssBaseline, ThemeProvider} from "@mui/material";
+import Grid from '@mui/material/Grid2';
+import themeController from "./themeController";
+import Header from "./Sections/Header.tsx";
 
-function App() {
-  const [count, setCount] = useState(0)
+import SwipeableTemporaryDrawer from "./components/Drawer.tsx";
+import {AppProvider, useAppContext} from "./contexts/appContext.tsx";
+import {ReactNode} from "react";
+import Main from "./components/Main.tsx";
+import {QueryClient, QueryClientProvider} from "react-query";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+
+const App = () => {
+    const queryClient = new QueryClient();
+
+    const ThemeWrapper = ({children}: { children: ReactNode }) => {
+        const appContext = useAppContext()
+        return (
+            <ThemeProvider theme={themeController(appContext.getState()?.theme)}>
+                {children}
+            </ThemeProvider>)
+    }
+    return (
+        <AppProvider>
+            <QueryClientProvider client={queryClient}>
+                <ThemeWrapper>
+                    <CssBaseline/>
+                    <Header/>
+                    <Grid container wrap='nowrap'>
+                        <SwipeableTemporaryDrawer/>
+                        <Main/>
+                    </Grid>
+
+                </ThemeWrapper>
+            </QueryClientProvider>
+        </AppProvider>
+    )
 }
 
 export default App
