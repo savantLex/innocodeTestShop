@@ -1,7 +1,7 @@
 import {CssBaseline, ThemeProvider} from "@mui/material";
 import Grid from '@mui/material/Grid2';
 import themeController from "./themeController";
-import Header from "./Sections/Header.tsx";
+import Header from "./sections/Header.tsx";
 
 import SwipeableTemporaryDrawer from "./components/Drawer.tsx";
 import {AppProvider, useAppContext} from "./contexts/appContext.tsx";

@@ -62,7 +62,7 @@ export default function Header() {
                             color="inherit"
                         >
 
-                            <Badge badgeContent={getState().selectedItems.filter(({saved}) => !!saved)?.length}
+                            <Badge badgeContent={savedItems?.length}
                                    color="error"
                                    onClick={() => setCartOpen(!!savedItems?.length && !isCartOpen)}>
                                 <ShoppingCartIcon/>

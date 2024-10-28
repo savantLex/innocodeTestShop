@@ -24,6 +24,11 @@ type IModalBuyNow = {
     savedItems: IProduct[];
 }
 
+enum messages {
+    success = 'Suceessfully sent order!',
+    error = 'Error while sending order, please try again later'
+}
+
 export const ModalBuyNow = ({isCartOpen, setCartOpen, savedItems}: IModalBuyNow) => {
     const [isSnackOpen, setSnackOpen] = useState(false);
     const [snackMessage, setSnackMessage] = useState('Suceessfully sent order!');
@@ -36,8 +41,9 @@ export const ModalBuyNow = ({isCartOpen, setCartOpen, savedItems}: IModalBuyNow)
             if (!resp.data) {
                 throw 'Error while sending order'
             }
-            updateState({selectedItems: []})
+            setSnackMessage(messages.success)
             setSnackOpen(true)
+            updateState({selectedItems: []})
             setTimeout(() => setCartOpen(false), 3000)
         } catch (e) {
             setSnackMessage('Error while sending order, please try again later')
